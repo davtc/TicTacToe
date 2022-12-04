@@ -1,11 +1,12 @@
 class Grid:
     def __init__(self, size):
         self.size = size
+        self.grid = self.initializeGrid()
     
     def getSize(self):
         return self.size
 
-    def initilizeGrid(self):
+    def initializeGrid(self):
         grid = []
         for _ in range(self.size):
             grid.append([0]*self.size)
@@ -22,19 +23,22 @@ class Grid:
         grid[row][col] = player.getId()
         return grid
 
+    def printRowBorder(self):
+        return "--"*self.size +"-\n"
 
-    def printGrid(self, grid, player1, player2):
-        grid_str = "_ _ _\n"
-        for row, cols in enumerate(grid):
+    def printGrid(self, player1, player2):
+        grid_str = ""
+        grid_str += self.printRowBorder()
+        for row, cols in enumerate(self.grid):
+            grid_str += "|"
             for col in cols:
-                grid_str += "|"
-                if grid[row][col] == 0:
+                if self.grid[row][col] == 0:
                     grid_str += " |"
-                elif grid[row][col] == 1:
-                    grid_str += player1.getSymbol + "|"
+                elif self.grid[row][col] == 1:
+                    grid_str += player1.getSymbol() + "|"
                 else:
-                    grid_str += player2.getSymbol + "|"
-                grid_str += "\n_ _ _\n"
+                    grid_str += player2.getSymbol() + "|"
+            grid_str += "\n" + self.printRowBorder()
         
         return grid_str
             
@@ -52,4 +56,13 @@ class Player:
         return self.symbol
 
 if __name__ == '__main__':
-    
+    # size = input("Enter the size of the grid:\n")
+    # grid = Grid(int(size))
+    # symbol1 = input("Enter the symbol representing player 1:\n")
+    # symbol2 = input("Enter the symbol representing player 2:\n")
+    # player1 = Player(1, symbol1)
+    # player2 = Player(2, symbol2)
+    grid = Grid(int(5))
+    player1 = Player(1, 'X')
+    player2 = Player(2, 'O')
+    print(grid.printGrid(player1, player2))
