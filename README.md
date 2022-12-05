@@ -1,4 +1,22 @@
-# TicTacToe
-This project was started as a beginner level project to develop and test my coding skills with Python. The intention of this project is to create a Tic Tac Toe-like game 
-with the ability to modify it by changing settings like the grid size, player symbol and winning conditions. The game will be coded in Pything and also be connected to 
-a web based front-end as the user interface.
+# Tic Tac Toe-like Game
+## Project Description
+This project was started with the intention to choose a beginner level project that could be easily extended with further functionality. The aim of this project is to create a Tic Tac Toe-like game which can be where the grid size and winning conditions can be modified. The game can be scaled from a simple 3x3 Tic Tac Toe game to a 15x15 Gomoku (https://en.wikipedia.org/wiki/Gomoku) game where you will need to connect 5 in a row to win. 
+
+The initial objectives of this project is to:
+- Develop all the logic for this game and create a back-end API.
+- Connect it with a web based front-end with a user interface that displays the game which can be played.
+
+Additional functionality that could be added later include:
+- The ability to play vs an AI
+- Play the game in a multiplayer setting with another user 
+
+## Project Goals
+My goals for this project are the following:
+- Develop and test my coding skills with Python.
+- Write organized, reusable and readable code so that additional functionality can be implemented easily
+- Improve my knowledge of front-end and back-end integration and API development.
+- Explore new areas of coding that I have not experienced before
+
+## About the Project
+- Author: David Tran
+- Written in Python 3.11.0
