@@ -1,4 +1,5 @@
 # tictactoe.py
+# Version 0.5 - Game is now playable in the terminal
 #
 # Created by David Tran
 # Created on Sat Dec 03 2022
@@ -88,7 +89,6 @@ class Grid:
         forward_diagonal = self.checkSouthWest(move, move_list) + self.checkNorthEast(move, move_list) + 1
         backward_diagonal = self.checkNorthWest(move, move_list) + self.checkSouthEast(move, move_list) + 1
         
-        print(max(horizontal, vertical, forward_diagonal, backward_diagonal))
         return max(horizontal, vertical, forward_diagonal, backward_diagonal)
 
     def isMoveValid(self, move):
@@ -141,10 +141,11 @@ class Move:
         self.coord = (self.row, self.col)
 
 class GameState:
-    def __init__(self, grid, player1, player2):
+    def __init__(self, grid, player1, player2, win):
         self.grid = grid
         self.player1 = player1
         self.player2 = player2
+        self.win = win
         self.result = -1
         self.player_order = []
         self.move_sequence = []
@@ -158,18 +159,21 @@ class GameState:
     def isGameOngoing(self):
         return self.grid.moves_left > 0 and self.result == -1
 
-    def checkResult(self, player):
-        if self.checkWin():
-            self.result = player.id
+    def checkResult(self, grid, move, player):
+        if self.checkWin(grid, move, player.move_list): # Win
+            self.result = player.id # Win
             return True
         elif self.grid.moves_left == 0:
             self.result = 0
             return True
-        else:
+        else: # Still pending
             return False
 
-    def checkWin(self):
-        return False
+    def checkWin(self, grid, move, move_list):
+        if grid.checkConnections(move, move_list) >= self.win:
+            return True
+        else:
+            return False
 
     def runGame(self):
         self.decideFirstPlayer()
@@ -192,7 +196,7 @@ class GameState:
                     else:
                         print("Move invalid")
 
-                    if self.checkResult(p):
+                    if self.checkResult(grid, move, p):
                         match self.result:
                             case 1:
                                 print("Result: Player 1 wins")
@@ -209,10 +213,12 @@ if __name__ == '__main__':
     # symbol2 = input("Enter the symbol representing player 2:\n")[0].capitalize()
     # player1 = Player(1, symbol1)
     # player2 = Player(2, symbol2)
-    grid = Grid(int(5))
+    grid = Grid(int(3))
     player1 = Player(1, 'X')
     player2 = Player(2, 'O')
+    win = 3
     print("The symbol for player 1 is: {}.\n".format(player1.symbol))
     print("The symbol for player 2 is: {}.\n".format(player2.symbol))
+    print("Get {} in a row to win.\n".format(win))
     print(grid.printGrid(player1, player2))
-    GameState(grid, player1, player2).runGame()
+    GameState(grid, player1, player2, win).runGame()
