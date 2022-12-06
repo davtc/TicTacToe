@@ -1,10 +1,15 @@
+# tictactoe.py
+#
+# Created by David Tran
+# Created on Sat Dec 03 2022
+# 
+
 import random
 class Grid:
     def __init__(self, size):
         self.size = size
         self.grid = self.initializeGrid()
         self.moves_left = len(self.grid[0]) * len(self.grid[0])
-        self.connections = {}
 
     def initializeGrid(self):
         grid = []
@@ -13,43 +18,78 @@ class Grid:
 
         return grid
 
-    def checkLeftBound(self, y):
-        return y >= 0
+    def checkWest(self, move, move_list):
+        connection = 0
+        if move.col - 1 >= 0:
+            west = (move.row, move.col - 1)
+            while (west[0], west[1] - connection) in move_list:  
+                connection += 1
+        return connection
 
-    def checkRightBound(self, y):
-        return y < self.size
+    def checkEast(self, move, move_list):
+        connection = 0
+        if move.col + 1 < self.size:
+            east = (move.row, move.col + 1)
+            while (east[0], east[1] + connection) in move_list:  
+                connection += 1
+        return connection
 
-    def addConnection(self, move, move_list):
-        # Modify number of horizontal connections
-        h_connections = 1
-        if self.checkLeftBound(move.col - 1): 
-            left = (move.row, move.col - 1)
-            if left in move_list:
-                h_connections += self.connections[left][0]
+    def checkNorth(self, move, move_list):
+        connection = 0
+        if move.row - 1 >= 0:
+            north = (move.row - 1, move.col)
+            while (north[0], north[1] - connection) in move_list:  
+                connection += 1
+        return connection
 
-        if self.checkRightBound(move.col + 1):
-            right = (move.row, move.col + 1)
-            if right in move_list:
-                h_connections += self.connections[right][0]
+    def checkSouth(self, move, move_list):
+        connection = 0
+        if move.col + 1 < self.size:
+            south = (move.row + 1, move.col)
+            while (south[0], south[1] + connection) in move_list:  
+                connection += 1
+        return connection
 
-        self.connections[move.coord] = [h_connections, 0, 0]
+    def checkNorthEast(self, move, move_list):
+        connection = 0
+        if move.row - 1 >= 0 and move.col + 1 < self.size:
+            northeast = (move.row - 1, move.col + 1)
+            while (northeast[0] - connection, northeast[1] + connection) in move_list:  
+                connection += 1
+        return connection
 
-        if self.checkLeftBound(move.col - 1):
-            left = (move.row, move.col - 1)
-            print(list(reversed(range(left[1]))))
-            for i in reversed(range(left[1] + 1)):
-                if (left[0], i) in move_list:
-                    self.connections[(left[0], i)][0] = h_connections
-                else:
-                    break
+    def checkNorthWest(self, move, move_list):
+        connection = 0
+        if move.row - 1 >= 0 and move.col - 1 >= 0:
+            northwest = (move.row - 1, move.col - 1)
+            while (northwest[0] - connection, northwest[1] - connection) in move_list:  
+                connection += 1
+        return connection
+
+    def checkSouthEast(self, move, move_list):
+        connection = 0
+        if move.row + 1 < self.size and move.col + 1 < self.size:
+            southeast = (move.row + 1, move.col + 1)
+            while (southeast[0] + connection, southeast[1] + connection) in move_list:  
+                connection += 1
+        return connection
+
+    def checkSouthWest(self, move, move_list):
+        connection = 0
+        if move.row + 1 < self.size and move.col - 1 >= 0:
+            southwest = (move.row + 1, move.col - 1)
+            while (southwest[0] + connection, southwest[1] - connection) in move_list:  
+                connection += 1
+        return connection
+
+    def checkConnections(self, move, move_list):
+        horizontal = self.checkWest(move, move_list) + self.checkEast(move, move_list) + 1
+        vertical = self.checkNorth(move, move_list) + self.checkSouth(move, move_list) + 1
+        forward_diagonal = self.checkSouthWest(move, move_list) + self.checkNorthEast(move, move_list) + 1
+        backward_diagonal = self.checkNorthWest(move, move_list) + self.checkSouthEast(move, move_list) + 1
         
-        if self.checkRightBound(move.col + 1):
-            right = (move.row, move.col + 1)
-            for i in range(right[1], self.size):
-                if (right[0], i) in move_list:
-                    self.connections[(right[0], i)][0] = h_connections
-                else:
-                    break
+        print(max(horizontal, vertical, forward_diagonal, backward_diagonal))
+        return max(horizontal, vertical, forward_diagonal, backward_diagonal)
 
     def isMoveValid(self, move):
         if move.row >= 0 and move.row < self.size and move.row >= 0 and move.col < self.size: 
@@ -64,7 +104,6 @@ class Grid:
         if self.isMoveValid(move):
             self.grid[move.row][move.col] = player.id
             self.moves_left -= 1
-            self.addConnection(move, player.move_list)
             return True
         else:
             return False
@@ -88,8 +127,6 @@ class Grid:
         
         return grid_str
             
-
-
 class Player:
     def __init__(self, id, symbol):
         self.id = id
@@ -149,7 +186,7 @@ class GameState:
                     move = Move(int(row)-1, int(col)-1)
                     if self.grid.makeMove(p, move):
                         p.move_list.append(move.coord)
-                        print(grid.connections)
+                        grid.checkConnections(move, p.move_list)
                         turn_complete = True
                         print(grid.printGrid(player1, player2))
                     else:
