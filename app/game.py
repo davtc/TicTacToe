@@ -1,4 +1,4 @@
-# tictactoe.py
+# game.py
 # Version 0.5 - Game is now playable in the terminal
 #
 # Created by David Tran
@@ -197,13 +197,12 @@ class GameState:
                         print("Move invalid")
 
                     if self.checkResult(grid, move, p):
-                        match self.result:
-                            case 1:
-                                print("Result: Player 1 wins")
-                            case 2:
-                                print("Result: Player 2 wins")
-                            case default:
-                                print("Result: Draw")
+                        if self.result == 1:
+                            print("Result: Player 1 wins")
+                        elif self.result == 2:
+                            print("Result: Player 2 wins")
+                        else:
+                            print("Result: Draw")
 
 
 if __name__ == '__main__':

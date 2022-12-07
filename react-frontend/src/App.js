@@ -3,21 +3,29 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <h1>Game Settings</h1>
+      <form>
+        <fieldset>
+          <label>
+            <p>Select a grid size</p>
+            <input name="size" />
+          </label>
+          <label>
+            <p>Select the number of matches in a row to win</p>
+            <input name="win" />
+          </label>
+          <label>
+            <p>Select the letter to represent player 1 (eg. O)</p>
+            <input name="symbol1" />
+          </label>
+          <label>
+            <p>Select the letter to represent player 2 (eg. X)</p>
+            <input name="symbol2" />
+          </label>
+        </fieldset>
+        <button type="submit">Start Game</button>
+      </form>
     </div>
   );
 }
