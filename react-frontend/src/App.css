@@ -33,7 +33,12 @@
 }
 
 .wrapper fieldset {
-  margin: 20px 0;
+  margin: 0px;
+  margin-bottom: 20px;
+}
+
+.fieldset-auto-width {
+  display: inline-block;
 }
 
 @keyframes App-logo-spin {
