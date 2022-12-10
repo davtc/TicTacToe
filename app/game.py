@@ -7,10 +7,13 @@
 
 import random
 class Grid:
-    def __init__(self, size):
+    def __init__(self, size, grid = 0):
         self.size = size
-        self.grid = self.initializeGrid()
-        self.moves_left = len(self.grid[0]) * len(self.grid[0])
+        if grid == 0:
+            self.grid = self.initializeGrid()
+        else:
+            self.grid = grid
+        self.moves_left = self.size * self.size
 
     def initializeGrid(self):
         grid = []
@@ -39,7 +42,7 @@ class Grid:
         connection = 0
         if move.row - 1 >= 0:
             north = (move.row - 1, move.col)
-            while (north[0], north[1] - connection) in move_list:  
+            while (north[0] - connection, north[1]) in move_list:  
                 connection += 1
         return connection
 
@@ -47,7 +50,7 @@ class Grid:
         connection = 0
         if move.col + 1 < self.size:
             south = (move.row + 1, move.col)
-            while (south[0], south[1] + connection) in move_list:  
+            while (south[0] + connection, south[1]) in move_list:  
                 connection += 1
         return connection
 
@@ -151,10 +154,10 @@ class GameState:
         self.move_sequence = []
 
     def decideFirstPlayer(self):
-        if random.randint(0, 1) == 0:
-            player1.moved_first = True
+        if random.choice([player1, player2]) == player1:
+            return 1
         else:
-            player2.moved_first = True
+            return 2
 
     def isGameOngoing(self):
         return self.grid.moves_left > 0 and self.result == -1
@@ -175,9 +178,9 @@ class GameState:
         else:
             return False
 
+    # Run the game in terminal
     def runGame(self):
-        self.decideFirstPlayer()
-        if player1.moved_first:
+        if self.decideFirstPlayer() == 1:
             self.player_order = [player1, player2]
         else:
             self.player_order = [player2, player1]
@@ -190,7 +193,7 @@ class GameState:
                     move = Move(int(row)-1, int(col)-1)
                     if self.grid.makeMove(p, move):
                         p.move_list.append(move.coord)
-                        grid.checkConnections(move, p.move_list)
+                        self.checkWin(grid, move, p.move_list)
                         turn_complete = True
                         print(grid.printGrid(player1, player2))
                     else:
