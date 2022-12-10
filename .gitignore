@@ -6,3 +6,4 @@ react-frontend/node_modules/
 react-frontend/yarn.lock
 react-frontend/.yarnrc.yml
 react-frontend/yarn.lock
+/react-frontend/yarn.lock
