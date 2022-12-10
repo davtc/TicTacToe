@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import './App.css';
 
+URL = 'http://localhost:5000'
+
 function App() {
   const defaultData = {
     size: 3,
@@ -13,13 +15,18 @@ function App() {
   const { register, formState: { errors }, reset, handleSubmit } = useForm({ defaultValues: defaultData });
   const [start, setStart] = useState(false);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setStart(true)
     console.log(data)
-
-    setTimeout(() => {
-      setStart(false);
-    }, 3000)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }
+    const response = await fetch(URL + '/settings', requestOptions)
+    const resData = await response.json()
+    console.log(resData)
+    setStart(false);
   };
 
   const handleReset= () => {
@@ -30,7 +37,7 @@ function App() {
     <div className="wrapper">
       <h1>Game Settings</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <fieldset disabled={start} class="fieldset-auto-width">
+        <fieldset disabled={start} className="fieldset-auto-width">
           <label>
             <p>Select a grid size between 3 and 15</p>
             <input type="number" {...register("size", { required: true, step:"1", min:"3", max:"15"})}/>

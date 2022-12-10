@@ -1,7 +1,7 @@
 from app import app
-from flask import request
+from flask import request, jsonify
 from flask_restx import Api, Resource, fields
-from game import Grid, Player, GameState
+from app.game import Grid, Player, GameState
 
 api = Api(app)
 
@@ -13,35 +13,30 @@ game_settings = api.model('Settings', {
     'symbol2': fields.String(required=True, min_length=1, max_length=1, description='The letter representing player 2')
 })
 
+@app.route('/settings', methods = ['POST'])
+def start():
+    data = request.get_json()
+    print(data)
+    size = int(data.get('size'))
+    win = int(data.get('win'))
+    player1_symbol = data.get('symbol1')
+    player2_symbol = data.get('symbol2')
 
-@ns_settings.route('/settings')
-class Setting(Resource):
-    def __init__(self):
-        self.size = 3
-        self.win = 3
-        self.symbol1 = 'O'
-        self.symbol2 = 'X'
-
-    @ns_settings.expect(game_settings, validate=True)
-    def post(self):
-        data = request.get_json()
-
-        self.size = int(data.get('size'))
-        self.win = int(data.get('win'))
-        self.player1_symbol = data.get('player1')
-        self.player2_symbol = data.get('player2')
-
-        self.grid = Grid(self.size)
-        self.player1 = Player(1, self.player1_symbol)
-        self.player2 = Player(2, self.player2_symbol)
-        gs = GameState(self.grid, self.player1, self.player2, self.win)
-        self.turn = gs.decideFirstPlayer()
-
-        return {'grid': self.grid.grid, 
-                'symbol1': self.player1_symbol,
-                'symbol2': self.player2_symbol,
-                'turn': self.turn,
-                'result': -1
-                }
-
+    grid = Grid(size)
+    player1 = Player(1, player1_symbol)
+    player2 = Player(2, player2_symbol)
+    gs = GameState(grid, player1, player2, win)
+    turn = gs.decideFirstPlayer()
+    print(jsonify({'grid': grid.grid, 
+            'symbol1': player1_symbol,
+            'symbol2': player2_symbol,
+            'turn': turn,
+            'result': -1
+            }))
+    return jsonify({'grid': grid.grid, 
+            'symbol1': player1_symbol,
+            'symbol2': player2_symbol,
+            'turn': turn,
+            'result': -1
+            })
 

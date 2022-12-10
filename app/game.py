@@ -154,7 +154,7 @@ class GameState:
         self.move_sequence = []
 
     def decideFirstPlayer(self):
-        if random.choice([player1, player2]) == player1:
+        if random.choice([self.player1, self.player2]) == self.player1:
             return 1
         else:
             return 2
