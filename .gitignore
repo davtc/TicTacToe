@@ -1,7 +1,7 @@
 venv
 __pycache__
 .flaskenv
-react-frontend/.yarn/
-react-frontend/node_modules/
-react-frontend/.yarnrc.yml
-react-frontend/yarn.lock
+/react-frontend/.yarn/
+/react-frontend/node_modules/
+/react-frontend/yarn.lock
+/react-frontend/.yarnrc.yml
