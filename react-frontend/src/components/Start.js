@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import '../App.css';
 import App from '../App' 
 
@@ -39,7 +39,7 @@ function Start() {
 
   return (
     <div className="wrapper">
-      <h1>Game Settings</h1>
+      <h1>Scalable Tic Tac Toe</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <fieldset disabled={start} className="fieldset-auto-width">
           <label>

@@ -27,13 +27,17 @@ def start():
     player2 = Player(2, player2_symbol)
     gs = GameState(grid, player1, player2, win)
     turn = gs.decideFirstPlayer()
-    print(jsonify({'grid': grid.grid, 
+    print(jsonify({
+            'size': size,
+            'grid': grid.grid, 
             'symbol1': player1_symbol,
             'symbol2': player2_symbol,
             'turn': turn,
             'result': -1
             }))
-    return jsonify({'grid': grid.grid, 
+    return jsonify({
+            'size': size,
+            'grid': grid.grid, 
             'symbol1': player1_symbol,
             'symbol2': player2_symbol,
             'turn': turn,
