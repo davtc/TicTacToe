@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom"
 import '../App.css';
-import App from '../App' 
 
+// The default screen of the front-end which sets the settings for the game.
 function Start() {
   const URL = 'http://localhost:5000'
 
@@ -16,8 +16,9 @@ function Start() {
 
   const { register, formState: { errors }, reset, handleSubmit } = useForm({ defaultValues: defaultData });
   const navigate = useNavigate();
-  const [start, setStart] = useState(false);
+  const [start, setStart] = useState(false); // State for whether the start game button has been pressed
 
+  // Sends a POST request to the back-end when the start game button is pressed.
   const onSubmit = async (data) => {
     setStart(true)
     console.log(data)
@@ -33,6 +34,7 @@ function Start() {
     navigate('/game', {state: resData})
   };
 
+  // Resets the settings form to the default values.
   const handleReset= () => {
     reset()
   };

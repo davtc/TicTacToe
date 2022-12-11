@@ -6,6 +6,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// Using MemoryRouter so that the URL doesn't change when navigating between routes.
 root.render(
   <React.StrictMode>
     <Router>

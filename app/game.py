@@ -107,6 +107,7 @@ class Grid:
         if self.isMoveValid(move):
             self.grid[move.row][move.col] = player.id
             self.moves_left -= 1
+            player.move_list.append(move.coord)
             return True
         else:
             return False
@@ -157,13 +158,13 @@ class GameState:
         if random.choice([self.player1, self.player2]) == self.player1:
             return 1
         else:
-            return 2
+            return -1
 
     def isGameOngoing(self):
         return self.grid.moves_left > 0 and self.result == -1
 
-    def checkResult(self, grid, move, player):
-        if self.checkWin(grid, move, player.move_list): # Win
+    def checkResult(self, move, player):
+        if self.checkWin(move, player.move_list): # Win
             self.result = player.id # Win
             return True
         elif self.grid.moves_left == 0:
@@ -172,8 +173,9 @@ class GameState:
         else: # Still pending
             return False
 
-    def checkWin(self, grid, move, move_list):
-        if grid.checkConnections(move, move_list) >= self.win:
+    def checkWin(self, move, move_list):
+        print(move_list)
+        if self.grid.checkConnections(move, move_list) >= self.win:
             return True
         else:
             return False
@@ -192,20 +194,23 @@ class GameState:
                     row, col = input("Enter the move for player {} (eg. 1 1 for row 1, col 1):".format(p.id)).split()
                     move = Move(int(row)-1, int(col)-1)
                     if self.grid.makeMove(p, move):
-                        p.move_list.append(move.coord)
-                        self.checkWin(grid, move, p.move_list)
                         turn_complete = True
                         print(grid.printGrid(player1, player2))
                     else:
                         print("Move invalid")
 
-                    if self.checkResult(grid, move, p):
+                    if self.checkResult(move, p):
                         if self.result == 1:
                             print("Result: Player 1 wins")
                         elif self.result == 2:
                             print("Result: Player 2 wins")
                         else:
                             print("Result: Draw")
+
+    # Updates the grid with a new move for the POST request
+    def update(self, player, move):
+        self.grid.makeMove(player, move)
+        return self.grid
 
 
 if __name__ == '__main__':
