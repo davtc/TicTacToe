@@ -41,7 +41,7 @@ function Start() {
 
   return (
     <div className="wrapper">
-      <h1>Scalable Tic Tac Toe</h1>
+      <h1>Configurable Tic Tac Toe</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <fieldset disabled={start} className="fieldset-auto-width">
           <label>
