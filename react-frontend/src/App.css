@@ -38,7 +38,8 @@
   margin-bottom: 20px;
 }
 
-.fieldset-auto-width {
+.fieldset {
+  padding: 10px;
   display: inline-block;
 }
 
@@ -53,8 +54,8 @@
 
 .square {
   background-color: white;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border: gray 1px solid;
   vertical-align: top;
   justify-content: center;  
@@ -63,13 +64,8 @@
 }
 
 .square-text {
-  font-size: 35px;
+  font-size: 30px;
   display: inline-block;
   vertical-align: top;
   text-align: bottom; 
-}
-
-.square-disabled
-{
-  pointer-events: none;
 }

@@ -26,7 +26,7 @@ class Grid:
         connection = 0
         if move.col - 1 >= 0:
             west = (move.row, move.col - 1)
-            while (west[0], west[1] - connection) in move_list:  
+            while [west[0], west[1] - connection] in move_list:  
                 connection += 1
         return connection
 
@@ -34,7 +34,7 @@ class Grid:
         connection = 0
         if move.col + 1 < self.size:
             east = (move.row, move.col + 1)
-            while (east[0], east[1] + connection) in move_list:  
+            while [east[0], east[1] + connection] in move_list:  
                 connection += 1
         return connection
 
@@ -42,15 +42,15 @@ class Grid:
         connection = 0
         if move.row - 1 >= 0:
             north = (move.row - 1, move.col)
-            while (north[0] - connection, north[1]) in move_list:  
+            while [north[0] - connection, north[1]] in move_list:  
                 connection += 1
         return connection
 
     def checkSouth(self, move, move_list):
         connection = 0
-        if move.col + 1 < self.size:
+        if move.row + 1 < self.size:
             south = (move.row + 1, move.col)
-            while (south[0] + connection, south[1]) in move_list:  
+            while [south[0] + connection, south[1]] in move_list:  
                 connection += 1
         return connection
 
@@ -58,7 +58,7 @@ class Grid:
         connection = 0
         if move.row - 1 >= 0 and move.col + 1 < self.size:
             northeast = (move.row - 1, move.col + 1)
-            while (northeast[0] - connection, northeast[1] + connection) in move_list:  
+            while [northeast[0] - connection, northeast[1] + connection] in move_list:  
                 connection += 1
         return connection
 
@@ -66,7 +66,7 @@ class Grid:
         connection = 0
         if move.row - 1 >= 0 and move.col - 1 >= 0:
             northwest = (move.row - 1, move.col - 1)
-            while (northwest[0] - connection, northwest[1] - connection) in move_list:  
+            while [northwest[0] - connection, northwest[1] - connection] in move_list:  
                 connection += 1
         return connection
 
@@ -74,7 +74,7 @@ class Grid:
         connection = 0
         if move.row + 1 < self.size and move.col + 1 < self.size:
             southeast = (move.row + 1, move.col + 1)
-            while (southeast[0] + connection, southeast[1] + connection) in move_list:  
+            while [southeast[0] + connection, southeast[1] + connection] in move_list:  
                 connection += 1
         return connection
 
@@ -82,7 +82,7 @@ class Grid:
         connection = 0
         if move.row + 1 < self.size and move.col - 1 >= 0:
             southwest = (move.row + 1, move.col - 1)
-            while (southwest[0] + connection, southwest[1] - connection) in move_list:  
+            while [southwest[0] + connection, southwest[1] - connection] in move_list:  
                 connection += 1
         return connection
 
@@ -91,7 +91,6 @@ class Grid:
         vertical = self.checkNorth(move, move_list) + self.checkSouth(move, move_list) + 1
         forward_diagonal = self.checkSouthWest(move, move_list) + self.checkNorthEast(move, move_list) + 1
         backward_diagonal = self.checkNorthWest(move, move_list) + self.checkSouthEast(move, move_list) + 1
-        
         return max(horizontal, vertical, forward_diagonal, backward_diagonal)
 
     def isMoveValid(self, move):
@@ -174,7 +173,6 @@ class GameState:
             return False
 
     def checkWin(self, move, move_list):
-        print(move_list)
         if self.grid.checkConnections(move, move_list) >= self.win:
             return True
         else:

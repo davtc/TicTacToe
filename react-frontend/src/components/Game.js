@@ -5,16 +5,17 @@ import Square from './Square.js'
 // The function component that handles the game logic.
 function Game () {
     const URL = 'http://localhost:5000'
-    // State to disable the grid while its waiting for a move to update
-    const [disable, SetDisable] = useState(true)
-
+    // Disable the grid while its waiting for a move to update
+    let disable = false
+    // State for whether the game is over or not. -1: Ongoing, 0: Draw, 1: Win
+    const [finished, SetFinished] = useState(-1)
     const location = useLocation();
     const state = location.state
     let { size, grid, win, symbol1, prev_moves1, symbol2, prev_moves2, turn, result, move_success } = state
     
     // Checks if a move has already been made on a square.
     const checkSquare = (row, col) => {
-        if (grid[row][col] == 0) {
+        if (!disable && grid[row][col] == 0) {
             return true
         } else {
             return false
@@ -25,9 +26,8 @@ function Game () {
     const handleMove = async (index) => {
         const row = ~~(index / size)
         const col = index % size
-        console.log(row, col)
         if (checkSquare(row, col)) {
-            SetDisable(true)
+            disable = true
             // Send POST request to the flask server with the following JSON object when an empty square is clicked
             const data = {
                 size: size,
@@ -57,9 +57,15 @@ function Game () {
             result = resData.result
             move_success = resData.move_success
 
-            SetDisable(false)
-            setPlayerColour(textColour(turn))
-            setPlayerTurn(playerSymbol(turn))
+            if (result == -1) {
+                setPlayerColour(textColour(turn))
+                setPlayerTurn(playerSymbol(turn))
+                disable = false
+            } else if (result == 0) {
+                SetFinished(0)
+            } else {
+                SetFinished(1)
+            }
             SetDisplay(printGrid(grid))
         }
         else {
@@ -104,8 +110,7 @@ function Game () {
                             index={index}
                             symbol={playerSymbol(val)}
                             colour={textColour(val)}
-                            handleClick={() => {handleMove(index)}}
-                            disabled={disable}/>
+                            handleClick={() => {handleMove(index)}}/>
                 )})}
             </div>
         )})
@@ -118,11 +123,16 @@ function Game () {
         <div className="wrapper">
             <h1>Configurable Tic Tac Toe</h1>
             <div>
-                <fieldset className="fieldset-auto-width">
+                <fieldset className="fieldset">
                 {display}
                 </fieldset>
-            </div>
-            <h2> Waiting for  <span style={{color: playerColour}}>Player {playerturn}</span> to make a move...</h2>
+            </div> {
+                    finished == -1 && <h2> Waiting for  <span style={{color: playerColour}}>Player {playerturn}</span> to make a move...</h2>
+                    } {
+                    finished == 0 && <h2>Draw!</h2>
+                    } {
+                    finished == 1 && <h2> <span style={{color: playerColour}}>Player {playerturn}</span> wins!</h2>
+                    }
         </div>
     )
 }

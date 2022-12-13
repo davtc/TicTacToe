@@ -43,7 +43,7 @@ function Start() {
     <div className="wrapper">
       <h1>Configurable Tic Tac Toe</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <fieldset disabled={start} className="fieldset-auto-width">
+        <fieldset disabled={start} className="fieldset">
           <label>
             <p>Select a grid size between 3 and 15</p>
             <input type="number" {...register("size", { required: true, step:"1", min:"3", max:"15"})}/>

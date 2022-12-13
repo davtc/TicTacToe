@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import '../App.css'
-import Game from './Game'
 
 
 // The individual square cell for the grid.
