@@ -142,7 +142,7 @@ class Move:
     def __init__(self, row, col):
         self.row = row
         self.col = col
-        self.coord = (self.row, self.col)
+        self.coord = [self.row, self.col]
 
 class GameState:
     def __init__(self, grid, player1, player2, win):

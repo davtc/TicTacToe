@@ -1,7 +1,7 @@
 from app import app
 from flask import request, jsonify
 from flask_restx import Api, Resource, fields
-from app.game import Grid, Player, GameState
+from app.game import Grid, Player, Move, GameState
 
 api = Api(app)
 
@@ -32,6 +32,7 @@ def start():
     response = jsonify({
             'size': size,
             'grid': grid.grid, 
+            'win': win,
             'symbol1': player1_symbol,
             'prev_moves1': [],
             'symbol2': player2_symbol,
@@ -53,18 +54,17 @@ def game():
     grid = data.get('grid')
     win = int(data.get('win'))
     player1_symbol = data.get('symbol1')
-    player1_moves = data.get('prev_moves1')
+    prev_moves1 = data.get('prev_moves1')
     player2_symbol = data.get('symbol2')
-    player2_moves = data.get('prev_moves2')
+    prev_moves2 = data.get('prev_moves2')
     turn = data.get('turn')
-    move = data.get('move')
-
+    move = Move(data.get('move')[0], data.get('move')[1])
 
     grid = Grid(size, grid)
     player1 = Player(1, player1_symbol,)
-    player1.move_list = player1_moves
+    player1.move_list = prev_moves1
     player2 = Player(2, player2_symbol)
-    player2.move_list = player2_moves
+    player2.move_list = prev_moves2
     gs = GameState(grid, player1, player2, win)
 
     # Update game state values
@@ -72,10 +72,11 @@ def game():
     if grid.isMoveValid(move):
         if turn == 1:
             grid = gs.update(player1, move)
-            result = gs.checkWin(move, player1.move_list)
+            gs.checkResult(move, player1)
         else:
             grid = gs.update(player2, move)
-            result = gs.checkWin(move, player2.move_list)
+            gs.checkResult(move, player2)
+        result = gs.result
         turn = -turn
         move_success = True
     else:
@@ -84,6 +85,7 @@ def game():
     response = jsonify({
             'size': size,
             'grid': grid.grid, 
+            'win': win,
             'symbol1': player1_symbol,
             'prev_moves1': player1.move_list,
             'symbol2': player2_symbol,
