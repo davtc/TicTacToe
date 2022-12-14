@@ -14,9 +14,9 @@ function Start() {
     symbol2: "X"
   }
 
-  const { register, formState: { errors }, reset, handleSubmit } = useForm({ defaultValues: defaultData });
-  const navigate = useNavigate();
-  const [start, setStart] = useState(false); // State for whether the start game button has been pressed
+  const { register, formState: { errors }, reset, handleSubmit } = useForm({ defaultValues: defaultData })
+  const navigate = useNavigate()
+  const [start, setStart] = useState(false) // State for whether the start game button has been pressed
 
   // Sends a POST request to the back-end when the start game button is pressed.
   const onSubmit = async (data) => {
@@ -82,10 +82,9 @@ function Start() {
           </label>
         </fieldset>
         <div>
-          <button type="submit" disabled={start}>Start Game</button>
+          <button className="button-style" type="submit" disabled={start}>Start Game</button> <button className="button-style" onClick={handleReset} disabled={start}>Reset</button>
         </div>
       </form>
-      <button onClick={handleReset}>Reset</button>
       {start &&
        <div>Loading...</div>
       }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Square from './Square.js'
 
 // The function component that handles the game logic.
@@ -10,6 +10,7 @@ function Game () {
     // State for whether the game is over or not. -1: Ongoing, 0: Draw, 1: Win
     const [finished, SetFinished] = useState(-1)
     const location = useLocation();
+    const navigate = useNavigate()
     const state = location.state
     let { size, grid, win, symbol1, prev_moves1, symbol2, prev_moves2, turn, result, move_success } = state
     
@@ -22,8 +23,37 @@ function Game () {
         }
     }
 
+    // Function to send a POST request to the flask sever to obtain an updated game state.
+    const updateGame = async (data, route) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }
+        const response = await fetch(URL + route, requestOptions)
+        const resData = await response.json()
+        console.log(resData)
+
+        grid = resData.grid
+        prev_moves1 = resData.prev_moves1
+        prev_moves2 = resData.prev_moves2
+        turn = resData.turn
+        result = resData.result
+        move_success = resData.move_success
+
+        if (result == -1) {
+            setPlayerColour(textColour(turn))
+            setPlayerTurn(playerSymbol(turn))
+            disable = false
+        } else if (result == 0) {
+            SetFinished(0)
+        } else {
+            SetFinished(1)
+        }
+        SetDisplay(displayGrid(grid))
+    }
     // Function that gets called when a square gets clicked.
-    const handleMove = async (index) => {
+    const handleMoveClick = async (index) => {
         const row = ~~(index / size)
         const col = index % size
         if (checkSquare(row, col)) {
@@ -40,33 +70,7 @@ function Game () {
                 turn: turn,
                 move: [row, col]
             }
-            console.log(data)
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            }
-            const response = await fetch(URL + '/game', requestOptions)
-            const resData = await response.json()
-            console.log(resData)
-
-            grid = resData.grid
-            prev_moves1 = resData.prev_moves1
-            prev_moves2 = resData.prev_moves2
-            turn = resData.turn
-            result = resData.result
-            move_success = resData.move_success
-
-            if (result == -1) {
-                setPlayerColour(textColour(turn))
-                setPlayerTurn(playerSymbol(turn))
-                disable = false
-            } else if (result == 0) {
-                SetFinished(0)
-            } else {
-                SetFinished(1)
-            }
-            SetDisplay(printGrid(grid))
+            updateGame(data, '/game')
         }
         else {
             console.log('Move invalid')
@@ -99,7 +103,7 @@ function Game () {
     const [playerturn, setPlayerTurn] = useState(playerSymbol(turn));
 
     // Display the game board as a series of squares.
-    function printGrid(grid) { 
+    function displayGrid(grid) { 
         return grid.map((rows, indexrow) => {
         return (
             <div key={indexrow}>
@@ -110,15 +114,32 @@ function Game () {
                             index={index}
                             symbol={playerSymbol(val)}
                             colour={textColour(val)}
-                            handleClick={() => {handleMove(index)}}/>
+                            handleClick={() => {handleMoveClick(index)}}/>
                 )})}
             </div>
         )})
     }
 
     // State of the display for the game board
-    const [display, SetDisplay] = useState(printGrid(grid))
+    const [display, SetDisplay] = useState(displayGrid(grid))
+
+    // Resets the current game when the restart button is pressed
     
+    // Navigate to the settings page when the settings button is clicked
+    const handleSettingsClick = () => {
+        navigate('/')
+    }
+
+    // Resets the current game when the restart button is pressed
+    const handleRestartCLick = () => {
+        const data = {
+            size: size,
+            win: win,
+            symbol1: symbol1,
+            symbol2: symbol2,
+        }
+        updateGame(data, '/settings')
+    }
     return (
         <div className="wrapper">
             <h1>Configurable Tic Tac Toe</h1>
@@ -133,7 +154,12 @@ function Game () {
                     } {
                     finished == 1 && <h2> <span style={{color: playerColour}}>Player {playerturn}</span> wins!</h2>
                     }
+            <div>
+            <button className="button-style" onClick={handleRestartCLick}>Restart</button> <button className="button-style" onClick={handleSettingsClick}>Settings</button>
+            </div>
         </div>
+
+      
     )
 }
   

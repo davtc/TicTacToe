@@ -60,7 +60,7 @@
   vertical-align: top;
   justify-content: center;  
   margin: 2px;
-  display: inline-block
+  display: inline-block;
 }
 
 .square-text {
@@ -68,4 +68,12 @@
   display: inline-block;
   vertical-align: top;
   text-align: bottom; 
+}
+
+.button-style {
+  background-color: gainsboro;
+  padding: 7px 10px;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
 }
