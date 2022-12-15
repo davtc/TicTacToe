@@ -8,11 +8,6 @@ The initial objectives of this project is to:
 - The front-end will only handle the UI components and communicate with the back-end using HTTP requests which will process the game logic.
 - Deploy the game on a cloud host to learn more about deployment.
 
-Additional functionality that could be added later include:
-- Add more functionality such as an undo button and saving/loading game replays.
-- The ability to play vs an AI.
-- Play the game in a multiplayer setting with another user.
-
 ## Project Goals
 My goals for this project are the following:
 - Develop and test my coding skills with Python.
@@ -22,3 +17,16 @@ My goals for this project are the following:
 
 ## About the Project
 - Author: David Tran
+- Status: In development
+### Technologies
+- Python 3.6
+- React 13.4
+
+## Version History
+- 0.5 - The game is now displayed and playable in the terminal.
+- 1.0 - The game is now rendered and playable in the react client.
+
+### Additional functionality that could be added later include:
+- Add more functionality such as an undo button and saving/loading game replays from a database.
+- The ability to play vs an AI.
+- Play the game in a multiplayer setting with another user.
