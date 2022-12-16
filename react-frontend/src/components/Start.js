@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
+import Select from "react-select"
 import { useNavigate } from "react-router-dom"
 import '../App.css';
 
@@ -11,7 +12,8 @@ function Start() {
     size: 3,
     win: 3,
     symbol1: "O",
-    symbol2: "X"
+    symbol2: "X",
+    firstturn: "random"
   }
 
   const { register, formState: { errors }, reset, handleSubmit } = useForm({ defaultValues: defaultData })
@@ -79,6 +81,14 @@ function Start() {
                 <span style={{color:"red"}}>The symbol must be a single letter.</span>
               )}
             </div>
+          </label>
+          <label>
+            <p>Select who will go first</p>
+            <select name="firstturn">
+              <option value="random">Random Player</option>
+              <option value="player1">Player 1</option>
+              <option value="player2">Player 2</option>
+            </select>
           </label>
         </fieldset>
         <div>

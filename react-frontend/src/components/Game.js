@@ -12,7 +12,7 @@ function Game () {
     const location = useLocation();
     const navigate = useNavigate()
     const state = location.state
-    let { size, grid, win, symbol1, prev_moves1, symbol2, prev_moves2, turn, result, move_success } = state
+    let { size, grid, win, symbol1, prev_moves1, symbol2, prev_moves2, firstturn, turn, result, move_success } = state
     
     // Checks if a move has already been made on a square.
     const checkSquare = (row, col) => {
@@ -132,11 +132,13 @@ function Game () {
 
     // Resets the current game when the restart button is pressed
     const handleRestartCLick = () => {
+        SetFinished(-1)
         const data = {
             size: size,
             win: win,
             symbol1: symbol1,
             symbol2: symbol2,
+            firstturn: firstturn
         }
         updateGame(data, '/settings')
     }

@@ -3,7 +3,7 @@ from flask import request, jsonify
 from flask_restx import Api, Resource, fields
 from app.game import Grid, Player, Move, GameState
 
-api = Api(app)
+""" api = Api(app)
 
 ns_settings = api.namespace('settings', description='The settings to start the game')
 game_settings = api.model('Settings', {
@@ -11,7 +11,7 @@ game_settings = api.model('Settings', {
     'win': fields.Integer(required=True, min=3, max=5, description='The number of squares you need to connect in a row to win'),
     'symbol1': fields.String(required=True, min_length=1, max_length=1, description='The letter representing player 1'),
     'symbol2': fields.String(required=True, min_length=1, max_length=1, description='The letter representing player 2')
-})
+}) """
 
 # Handles the POST request for the game settings form in the back-end
 @app.route('/settings', methods = ['POST'])
@@ -22,12 +22,18 @@ def start():
     win = int(data.get('win'))
     symbol1 = data.get('symbol1')
     symbol2 = data.get('symbol2')
+    firstturn = data.get('firstturn')
 
     grid = Grid(size)
     player1 = Player(1, symbol1)
     player2 = Player(2, symbol2)
     gs = GameState(grid, player1, player2, win)
-    turn = gs.decideFirstPlayer()
+    if firstturn == 'random':
+        turn = gs.decideFirstPlayer()
+    elif firstturn == 'player1':
+        turn = 1
+    else:
+        turn = -1
 
     response = jsonify({
             'size': size,
@@ -37,6 +43,7 @@ def start():
             'prev_moves1': [],
             'symbol2': symbol2,
             'prev_moves2': [],
+            'firstturn': firstturn,
             'turn': turn,
             'result': -1
             })
