@@ -4,16 +4,15 @@ This project was started with the intention to choose a beginner level project t
 
 The initial objectives of this project is to:
 - Develop all the logic for this game and create a back-end API using Python Flask.
-- Connect it with a web based front-end developed using React.js with a user interface that displays the game and some basic functionality like a restart button.
-- The front-end will only handle the UI components and communicate with the back-end using HTTP requests which will process the game logic.
+- Connect it with a web based frontend developed using React.js with a user interface that displays the game and some basic functionality like a restart button.
+- The front-end will only handle the UI components and communicate with the backend using HTTP requests which will process the game logic.
 - Deploy the game on a cloud host to learn more about deployment.
 
 ## Project Goals
 My goals for this project are the following:
 - Develop and test my coding skills with Python.
-- Write organized, reusable and readable code so that additional functionality can be implemented easily
-- Improve my knowledge of front-end and back-end integration and API development.
-- Explore new areas of coding that I have not experienced before
+- Write organized, reusable and readable code so that additional functionality can be implemented easily.
+- Improve my knowledge of frontend and backend integration and API development.
 
 ## About the Project
 - Author: David Tran
