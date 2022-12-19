@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import Select from "react-select"
 import { useNavigate } from "react-router-dom"
 import '../App.css';
 

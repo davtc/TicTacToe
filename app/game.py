@@ -1,10 +1,3 @@
-# game.py
-# Version 0.5 - Game is now playable in the terminal
-#
-# Created by David Tran
-# Created on Sat Dec 03 2022
-# 
-
 import random
 class Grid:
     def __init__(self, size, grid = 0):
