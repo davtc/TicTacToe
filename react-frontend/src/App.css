@@ -3,39 +3,10 @@
   vertical-align: top;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-.wrapper {
-  padding: 5px 20px;
-}
-
 .wrapper fieldset {
   margin: 0px;
   margin-bottom: 20px;
+  background-color: whitesmoke;
 }
 
 .fieldset {
@@ -43,37 +14,54 @@
   display: inline-block;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .square {
-  background-color: white;
+  background-color: lightcyan;
   width: 45px;
   height: 45px;
-  border: gray 1px solid;
+  border: black 1px solid;
   vertical-align: top;
+  margin: 1px;
   justify-content: center;  
-  margin: 2px;
   display: inline-block;
 }
 
 .square-text {
-  font-size: 30px;
+  font-size: 2em;
   display: inline-block;
   vertical-align: top;
   text-align: bottom; 
 }
 
-.button-style {
-  background-color: gainsboro;
+button {
+  background-color: lightcyan;
+  border-color: white;
   padding: 7px 10px;
-  border-radius: 5px;
-  font-size: 15px;
+  border-radius: 10px;
+  font-size: 1em;
   cursor: pointer;
+}
+
+input {
+  width: 20%;
+  padding: 10px 15px;
+  margin: 16px 0px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 1em;
+  background-color: lightcyan;
+}
+
+select {
+  width: 50%;
+  padding: 10px 15px;
+  margin: 16px 0px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 1em;
+  background-color: lightcyan;
+}
+
+option {
+  text-align: center;
+  font-size: 1em;
 }

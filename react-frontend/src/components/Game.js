@@ -157,7 +157,8 @@ function Game () {
                     finished == 1 && <h2> <span style={{color: playerColour}}>Player {playerturn}</span> wins!</h2>
                     }
             <div>
-            <button className="button-style" onClick={handleRestartCLick}>Restart</button> <button className="button-style" onClick={handleSettingsClick}>Settings</button>
+                <button onClick={handleRestartCLick}>Restart</button> 
+                <button onClick={handleSettingsClick}>Settings</button>
             </div>
         </div>
 

@@ -40,14 +40,20 @@ function Start() {
     reset()
   };
 
+  const limitInput = (e) => {
+    if (e.target.value.length > 2) {
+      e.target.value = e.target.value.slice(0, 2)
+    };
+  }
+
   return (
     <div className="wrapper">
       <h1>Configurable Tic Tac Toe</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <fieldset disabled={start} className="fieldset">
-          <label>
+          <label className='label-style'>
             <p>Select a grid size between 3 and 15</p>
-            <input type="number" {...register("size", { required: true, step:"1", min:"3", max:"15"})}/>
+            <input type="number" min="3" max="15" onInput={e => limitInput(e)} {...register("size", { required: true, step:"1", min:"3", max:"15"})}/>
             <div>
               {(errors.size?.type=="required" || errors.size?.type=="min" || errors.size?.type=="max") && (
                 <span style={{color:"red"}}>The grid size must be between 3 and 15.</span>
@@ -56,7 +62,7 @@ function Start() {
           </label>
           <label>
             <p>Select the number of matches in a row to win between 3 and 5</p>
-            <input type="number" {...register("win", { required: true, step:"1", min:"3", max:"5"})}/>
+            <input type="number" min="3" max="5" onInput={e => limitInput(e)} {...register("win", { required: true, step:"1", min:"3", max:"5"})}/>
             <div>
               {(errors.win?.type=="required" || errors.win?.type=="min" || errors.win?.type=="max") && (
                 <span style={{color:"red"}}>The win condition must be between 3 and 5.</span>
@@ -65,7 +71,7 @@ function Start() {
           </label>
           <label>
             <p>Select the letter to represent player 1 (eg. O)</p>
-            <input type="text" {...register("symbol1", { required: true, minLength:"1", maxLength:"1", pattern: /[A-Za-z]/})}/>
+            <input type="text" maxLength="1" {...register("symbol1", { required: true, minLength:"1", maxLength:"1", pattern: /[A-Za-z]/})}/>
             <div>
             {(errors.symbol1?.type=="required" || errors.symbol1?.type=="minLength" || errors.symbol1?.type=="maxLength" || errors.symbol1?.type=="pattern") && (
                 <span style={{color:"red"}}>The symbol must be a single letter.</span>
@@ -74,7 +80,7 @@ function Start() {
           </label>
           <label>
             <p>Select the letter to represent player 2 (eg. X)</p>
-            <input type="text" {...register("symbol2", { required: true, minLength:"1", maxLength:"1", pattern: /[A-Za-z]/})}/>
+            <input type="text" maxLength="1" {...register("symbol2", { required: true, minLength:"1", maxLength:"1", pattern: /[A-Za-z]/})}/>
             <div>
             {(errors.symbol2?.type=="required" || errors.symbol2?.type=="minLength" || errors.symbol2?.type=="maxLength" || errors.symbol2?.type=="pattern") && (
                 <span style={{color:"red"}}>The symbol must be a single letter.</span>
@@ -91,7 +97,8 @@ function Start() {
           </label>
         </fieldset>
         <div>
-          <button className="button-style" type="submit" disabled={start}>Start Game</button> <button className="button-style" onClick={handleReset} disabled={start}>Reset</button>
+          <button type="submit" disabled={start}>Start Game</button> 
+          <button onClick={handleReset} disabled={start}>Reset</button>
         </div>
       </form>
       {start &&
