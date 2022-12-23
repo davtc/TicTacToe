@@ -79,9 +79,9 @@ function Game () {
 
     const textColour = (val) => {
         if (val == 1) {
-            return 'blue'
+            return 'royalblue'
         } else {
-            return 'red'
+            return '#ff5050'
         }
     }
 
@@ -157,8 +157,7 @@ function Game () {
                     finished == 1 && <h2> <span style={{color: playerColour}}>Player {playerturn}</span> wins!</h2>
                     }
             <div>
-                <button onClick={handleRestartCLick}>Restart</button> 
-                <button onClick={handleSettingsClick}>Settings</button>
+                <button onClick={handleRestartCLick}>Restart</button> <button onClick={handleSettingsClick}>Settings</button>
             </div>
         </div>
 

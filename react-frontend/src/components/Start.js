@@ -51,8 +51,8 @@ function Start() {
       <h1>Configurable Tic Tac Toe</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <fieldset disabled={start} className="fieldset">
-          <label className='label-style'>
-            <p>Select a grid size between 3 and 15</p>
+          <label>
+            <p>Select a grid size between 3 and 15:</p>
             <input type="number" min="3" max="15" onInput={e => limitInput(e)} {...register("size", { required: true, step:"1", min:"3", max:"15"})}/>
             <div>
               {(errors.size?.type=="required" || errors.size?.type=="min" || errors.size?.type=="max") && (
@@ -61,7 +61,7 @@ function Start() {
             </div>
           </label>
           <label>
-            <p>Select the number of matches in a row to win between 3 and 5</p>
+            <p>Select the number of matches in a row to win between 3 and 5:</p>
             <input type="number" min="3" max="5" onInput={e => limitInput(e)} {...register("win", { required: true, step:"1", min:"3", max:"5"})}/>
             <div>
               {(errors.win?.type=="required" || errors.win?.type=="min" || errors.win?.type=="max") && (
@@ -70,7 +70,7 @@ function Start() {
             </div>
           </label>
           <label>
-            <p>Select the letter to represent player 1 (eg. O)</p>
+            <p>Select the letter to represent player 1: (eg. O)</p>
             <input type="text" maxLength="1" {...register("symbol1", { required: true, minLength:"1", maxLength:"1", pattern: /[A-Za-z]/})}/>
             <div>
             {(errors.symbol1?.type=="required" || errors.symbol1?.type=="minLength" || errors.symbol1?.type=="maxLength" || errors.symbol1?.type=="pattern") && (
@@ -79,7 +79,7 @@ function Start() {
             </div>
           </label>
           <label>
-            <p>Select the letter to represent player 2 (eg. X)</p>
+            <p>Select the letter to represent player 2: (eg. X)</p>
             <input type="text" maxLength="1" {...register("symbol2", { required: true, minLength:"1", maxLength:"1", pattern: /[A-Za-z]/})}/>
             <div>
             {(errors.symbol2?.type=="required" || errors.symbol2?.type=="minLength" || errors.symbol2?.type=="maxLength" || errors.symbol2?.type=="pattern") && (
@@ -88,7 +88,7 @@ function Start() {
             </div>
           </label>
           <label>
-            <p>Select who will go first</p>
+            <p>Select who will go first:</p>
             <select name="firstturn">
               <option value="random">Random Player</option>
               <option value="player1">Player 1</option>
@@ -97,8 +97,7 @@ function Start() {
           </label>
         </fieldset>
         <div>
-          <button type="submit" disabled={start}>Start Game</button> 
-          <button onClick={handleReset} disabled={start}>Reset</button>
+          <button type="submit" disabled={start}>Start Game</button>   <button onClick={handleReset} disabled={start}>Reset</button>
         </div>
       </form>
       {start &&
