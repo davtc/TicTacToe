@@ -100,7 +100,7 @@ function Game () {
     }
 
     // State for the symbol of the current player making a turn.
-    const [playerturn, setPlayerTurn] = useState(playerSymbol(turn));
+    const [playerTurn, setPlayerTurn] = useState(playerSymbol(turn));
 
     // Display the game board as a series of squares.
     function displayGrid(grid) { 
@@ -114,6 +114,8 @@ function Game () {
                             index={index}
                             symbol={playerSymbol(val)}
                             colour={textColour(val)}
+                            playercolour={textColour(turn)}
+                            playerturn={playerSymbol(turn)}
                             handleClick={() => {handleMoveClick(index)}}/>
                 )})}
             </div>
@@ -122,8 +124,6 @@ function Game () {
 
     // State of the display for the game board
     const [display, SetDisplay] = useState(displayGrid(grid))
-
-    // Resets the current game when the restart button is pressed
     
     // Navigate to the settings page when the settings button is clicked
     const handleSettingsClick = () => {
@@ -150,11 +150,11 @@ function Game () {
                 {display}
                 </fieldset>
             </div> {
-                    finished == -1 && <h2> Waiting for  <span style={{color: playerColour}}>Player {playerturn}</span> to make a move...</h2>
+                    finished == -1 && <h2> Waiting for  <span style={{color: playerColour}}>Player {playerTurn}</span> to make a move...</h2>
                     } {
                     finished == 0 && <h2>Draw!</h2>
                     } {
-                    finished == 1 && <h2> <span style={{color: playerColour}}>Player {playerturn}</span> wins!</h2>
+                    finished == 1 && <h2> <span style={{color: playerColour}}>Player {playerTurn}</span> wins!</h2>
                     }
             <div>
                 <button onClick={handleRestartCLick}>Restart</button> <button onClick={handleSettingsClick}>Settings</button>
