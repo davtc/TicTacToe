@@ -9,8 +9,12 @@ The initial objectives of this project is to:
 - Deploy the game on a cloud host to learn more about deployment.
 
 ## Technologies
-- Python 3.6
-- React 13.4
+- Python
+- Javascript
+
+### Libraries/Frameworks
+- Back end: Flask
+- Front end: React
 
 ## Project Goals
 My goals for this project are the following:
