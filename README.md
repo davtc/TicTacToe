@@ -18,9 +18,6 @@ My goals for this project are the following:
 - Write organized, reusable and readable code so that additional functionality can be implemented easily.
 - Improve my knowledge of frontend and backend integration and API development.
 
-## About the Project
-- Author: David Tran
-
 ## Version History
 - 0.5 - The game is now displayed and playable in the terminal.
 - 1.0 - The game is now rendered and playable in the react client.
@@ -29,3 +26,6 @@ My goals for this project are the following:
 - Add more functionality such as an undo button and saving/loading game replays from a database.
 - The ability to play vs an AI.
 - Play the game in a multiplayer setting with another user.
+
+## Author
+- David Tran
