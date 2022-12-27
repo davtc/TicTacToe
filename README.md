@@ -1,5 +1,5 @@
 # Configurable Tic Tac Toe Game
-## Project Description
+## Summary
 This project was started with the intention to choose a beginner level project that could be easily extended with further functionality. The aim of this project is to create a Tic Tac Toe-like game which can be where the grid size and winning conditions can be modified. The game can be scaled from a simple 3x3 Tic Tac Toe game to a 15x15 Gomoku (https://en.wikipedia.org/wiki/Gomoku) game where you will need to connect 5 in a row to win. 
 
 The initial objectives of this project is to:
