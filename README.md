@@ -8,6 +8,10 @@ The initial objectives of this project is to:
 - The front-end will only handle the UI components and communicate with the backend using HTTP requests which will process the game logic.
 - Deploy the game on a cloud host to learn more about deployment.
 
+## Technologies
+- Python 3.6
+- React 13.4
+
 ## Project Goals
 My goals for this project are the following:
 - Develop and test my coding skills with Python.
@@ -16,10 +20,6 @@ My goals for this project are the following:
 
 ## About the Project
 - Author: David Tran
-- Status: In development
-### Technologies
-- Python 3.6
-- React 13.4
 
 ## Version History
 - 0.5 - The game is now displayed and playable in the terminal.
